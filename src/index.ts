@@ -1,3 +1,5 @@
+const message = "Hello world"
 
-console.log("executandozzz 2")
-console.log("21123")
+console.log(message)
+
+console.log("novo teste")

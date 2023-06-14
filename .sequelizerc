@@ -1,0 +1,7 @@
+const path = require("path")
+
+module.exports = {
+  "models-path": path.resolve("src", "Frameworks", "db", "models"),
+  "migrations-path": path.resolve("src", "Frameworks", "db", "migrations"),
+  "seeders-path": path.resolve("src", "Frameworks", "db", "seeders"),
+}

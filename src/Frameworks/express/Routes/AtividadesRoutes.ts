@@ -1,13 +1,14 @@
-import { Router } from "express"
+import { Request, Response, Router } from "express"
 import {
   deleteAtividade,
   getAtividade,
   getAtividadeFiltro,
   getAtividadeList,
-  postAtividade,
+  //postAtividade,
   putAtividade,
   putAtividadeConcluida,
-} from "../Core/Repositorios/AtividadesRep"
+} from "../../../Core/Repositorios/AtividadesRep"
+import { CriarAtividadeController } from "aplicacao/controllers/Atividade/AtividadeController"
 
 const routes = Router()
 
@@ -24,8 +25,12 @@ routes.get("/busca/:id", (req, res) => {
   getAtividade(id, res)
 })
 
-routes.post("/", (req, res) => {
-  postAtividade(req, res)
+// routes.post("/", (req, res) => {
+//   postAtividade(req, res)
+// })
+
+routes.post("/", (req: Request, res: Response) => {
+  CriarAtividadeController(req, res)
 })
 
 routes.put("/atualiza/:id", (req, res) => {

@@ -1,43 +1,53 @@
 import { Request, Response } from "express"
-import Atividade from "../../Frameworks/db/models/Atividade"
+import AtividadeDB from "../../Frameworks/db/models/Atividade"
+import { Atividade } from "domains/models/implementacao/Atividade"
 
-export const getAtividadeList = async (res: Response) => {
-  const AtividadeListFromDB = await Atividade.findAll()
-  return res.send(AtividadeListFromDB)
+export const getAtividadeDBList = async (res: Response) => {
+  const AtividadeDBListFromDB = await AtividadeDB.findAll()
+  return res.send(AtividadeDBListFromDB)
 }
 
-export const getAtividadeFiltro = async (req: Request, res: Response) => {
+export const getAtividadeDBFiltro = async (req: Request, res: Response) => {
   const { condition } = req.params
-  const AtividadeListFromDB = await Atividade.findAll({
+  const AtividadeDBListFromDB = await AtividadeDB.findAll({
     where: {
       concluido: condition,
     },
   })
-  return res.send(AtividadeListFromDB)
+  return res.send(AtividadeDBListFromDB)
 }
 
-export const getAtividade = async (id: string, res: Response) => {
-  const AtividadeListFromDB = await Atividade.findOne({
+export const getAtividadeDB = async (id: string, res: Response) => {
+  const AtividadeDBListFromDB = await AtividadeDB.findOne({
     where: {
       id: id,
     },
   })
-  return res.send(AtividadeListFromDB)
+  return res.send(AtividadeDBListFromDB)
 }
 
-export const postAtividade = async (req: Request, res: Response) => {
-  await Atividade.create({
+export const criarAtividade = async (atividade: Atividade) => {
+  const atividadeIncluida = await AtividadeDB.create({
+    descricao: atividade.descricao,
+    concluido: false,
+    dataCriacao: new Date(),
+    dataConclusao: null,
+  })
+  return atividadeIncluida
+}
+export const postAtividadeDB = async (req: Request, res: Response) => {
+  await AtividadeDB.create({
     descricao: req.body.desc,
     concluido: false,
     dataCriacao: new Date(),
     dataConclusao: null,
   })
-  return getAtividadeList(res)
+  return getAtividadeDBList(res)
 }
 
-export const putAtividade = async (req: Request, res: Response) => {
+export const putAtividadeDB = async (req: Request, res: Response) => {
   const { id } = req.params
-  await Atividade.update(
+  await AtividadeDB.update(
     {
       descricao: req.body.desc,
     },
@@ -47,12 +57,12 @@ export const putAtividade = async (req: Request, res: Response) => {
       },
     }
   )
-  return getAtividade(id, res)
+  return getAtividadeDB(id, res)
 }
 
-export const putAtividadeConcluida = async (req: Request, res: Response) => {
+export const putAtividadeDBConcluida = async (req: Request, res: Response) => {
   const { id } = req.params
-  await Atividade.update(
+  await AtividadeDB.update(
     {
       concluido: true,
       dataConclusao: new Date(),
@@ -63,15 +73,15 @@ export const putAtividadeConcluida = async (req: Request, res: Response) => {
       },
     }
   )
-  return getAtividade(id, res)
+  return getAtividadeDB(id, res)
 }
 
-export const deleteAtividade = async (req: Request, res: Response) => {
+export const deleteAtividadeDB = async (req: Request, res: Response) => {
   const { id } = req.params
-  await Atividade.destroy({
+  await AtividadeDB.destroy({
     where: {
       id: id,
     },
   })
-  return getAtividadeList(res)
+  return getAtividadeDBList(res)
 }

@@ -1,11 +1,12 @@
+import { Request, Response } from "express"
 import Atividade from "../../Frameworks/db/models/Atividade"
 
-export const getAtividadeList = async (res: any) => {
+export const getAtividadeList = async (res: Response) => {
   const AtividadeListFromDB = await Atividade.findAll()
   return res.send(AtividadeListFromDB)
 }
 
-export const getAtividadeFiltro = async (req: any, res: any) => {
+export const getAtividadeFiltro = async (req: Request, res: Response) => {
   const { condition } = req.params
   const AtividadeListFromDB = await Atividade.findAll({
     where: {
@@ -15,7 +16,7 @@ export const getAtividadeFiltro = async (req: any, res: any) => {
   return res.send(AtividadeListFromDB)
 }
 
-export const getAtividade = async (id: number, res: any) => {
+export const getAtividade = async (id: string, res: Response) => {
   const AtividadeListFromDB = await Atividade.findOne({
     where: {
       id: id,
@@ -24,7 +25,7 @@ export const getAtividade = async (id: number, res: any) => {
   return res.send(AtividadeListFromDB)
 }
 
-export const postAtividade = async (req: any, res: any) => {
+export const postAtividade = async (req: Request, res: Response) => {
   await Atividade.create({
     descricao: req.body.desc,
     concluido: false,
@@ -34,7 +35,7 @@ export const postAtividade = async (req: any, res: any) => {
   return getAtividadeList(res)
 }
 
-export const putAtividade = async (req: any, res: any) => {
+export const putAtividade = async (req: Request, res: Response) => {
   const { id } = req.params
   await Atividade.update(
     {
@@ -49,7 +50,7 @@ export const putAtividade = async (req: any, res: any) => {
   return getAtividade(id, res)
 }
 
-export const putAtividadeConcluida = async (req: any, res: any) => {
+export const putAtividadeConcluida = async (req: Request, res: Response) => {
   const { id } = req.params
   await Atividade.update(
     {
@@ -65,7 +66,7 @@ export const putAtividadeConcluida = async (req: any, res: any) => {
   return getAtividade(id, res)
 }
 
-export const deleteAtividade = async (req: any, res: any) => {
+export const deleteAtividade = async (req: Request, res: Response) => {
   const { id } = req.params
   await Atividade.destroy({
     where: {

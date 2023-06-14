@@ -20,7 +20,7 @@ routes.get("/filtro/:condition", (req, res) => {
 })
 
 routes.get("/busca/:id", (req, res) => {
-  const id: any = req.params.id
+  const id = req.params.id
   getAtividade(id, res)
 })
 

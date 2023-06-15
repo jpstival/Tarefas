@@ -26,15 +26,19 @@ export const getAtividadeDB = async (id: string, res: Response) => {
   return res.send(AtividadeDBListFromDB)
 }
 
-export const criarAtividade = async (atividade: Atividade) => {
+export const criarAtividade = async (
+  atividade: Atividade
+): Promise<Atividade> => {
   const atividadeIncluida = await AtividadeDB.create({
     descricao: atividade.descricao,
     concluido: false,
     dataCriacao: new Date(),
     dataConclusao: null,
   })
-  return atividadeIncluida
+
+  return atividadeIncluida.dataValues
 }
+
 export const postAtividadeDB = async (req: Request, res: Response) => {
   await AtividadeDB.create({
     descricao: req.body.desc,

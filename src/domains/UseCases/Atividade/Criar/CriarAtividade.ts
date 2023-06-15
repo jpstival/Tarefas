@@ -1,12 +1,12 @@
-import AtividadeDb from "Frameworks/db/models/Atividade"
 import { CriarAtividadeInput } from "./CriarAtividadeInput"
-import { criarAtividade } from "Core/Repositorios/AtividadesRep"
-import { Atividade } from "domains/models/implementacao/Atividade"
+import { criarAtividade } from "../../../../Core/Repositorios/AtividadesRep"
+import { Atividade } from "../../../models/implementacao/Atividade"
+import { CriarAtividadeOuput } from "./CriarAtividadeOutput"
 
 export async function CriarAtividade(
   pInput: CriarAtividadeInput
-): Promise<AtividadeDb> {
+): Promise<CriarAtividadeOuput> {
   const NovaAtividade = new Atividade({ descricao: pInput.descricao })
-  const AtividadeDB = await criarAtividade(NovaAtividade)
-  return AtividadeDB
+  const atividadeDB = await criarAtividade(NovaAtividade)
+  return new CriarAtividadeOuput(atividadeDB)
 }

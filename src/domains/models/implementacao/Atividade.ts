@@ -1,6 +1,7 @@
 import { IAtividade } from "../interfaces/Atividade"
 
 export class Atividade implements IAtividade {
+  public id = 0
   public descricao = ""
   public concluido = false
   public dataCriacao = new Date()
@@ -10,6 +11,7 @@ export class Atividade implements IAtividade {
     if (pValues === undefined) {
       return
     }
+    this.id = pValues.id ? pValues.id : this.id
     this.descricao = pValues.descricao ? pValues.descricao : this.descricao
     this.concluido = pValues.concluido ? pValues.concluido : this.concluido
     this.dataCriacao = pValues.dataCriacao

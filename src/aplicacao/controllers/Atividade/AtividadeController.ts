@@ -1,12 +1,53 @@
+import { TodasAtividades } from "../../../domains/UseCases/Atividade/Listar/ListarTodasAtividades"
 import { CriarAtividade } from "../../../domains/UseCases/Atividade/Criar/CriarAtividade"
 import { CriarAtividadeInput } from "../../../domains/UseCases/Atividade/Criar/CriarAtividadeInput"
 import { Request, Response } from "express"
+import { DeletarAtividadeInput } from "../../../domains/UseCases/Atividade/Deletar/DeletarAtividadeInput"
+import { DeletarAtividades } from "../../../domains/UseCases/Atividade/Deletar/DeletarAtividade"
+
+export async function ListarTodasAtividadesController(
+  pResponse: Response
+): Promise<Response> {
+  const listaAtividades = await TodasAtividades()
+  return pResponse.send(listaAtividades.atividades)
+}
 
 export async function CriarAtividadeController(
   pRequest: Request,
   pResponse: Response
 ): Promise<Response> {
-  const input = new CriarAtividadeInput(pRequest)
-  const atividade = await CriarAtividade(input)
-  return pResponse.json(atividade)
+  try {
+    const input = new CriarAtividadeInput(pRequest)
+    const atividade = await CriarAtividade(input)
+    return pResponse.json(atividade)
+  } catch (error: any) {
+    if (error) {
+      return pResponse.status(400).send(error.message)
+    } else {
+      return pResponse.status(500).send("Ocorreu um erro inesperado")
+    }
+  }
+}
+
+export async function DeletarAtividadeController(
+  pRequest: Request,
+  pResponse: Response
+): Promise<Response> {
+  try {
+    const input = await DeletarAtividadeInput(pRequest)
+    const output = await DeletarAtividades(input)
+    if (output > 0) {
+      return pResponse.status(200).send(output + " atividade foi removida.")
+    } else {
+      return pResponse
+        .status(400)
+        .send(output + "Nenhuma atividade foi removida.")
+    }
+  } catch (error: any) {
+    if (error) {
+      return pResponse.status(400).send(error.message)
+    } else {
+      return pResponse.status(500).send("Ocorreu um erro inesperado")
+    }
+  }
 }

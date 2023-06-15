@@ -1,12 +1,12 @@
 import { CriarAtividadeInput } from "./CriarAtividadeInput"
-import { criarAtividade } from "../../../../Core/Repositorios/AtividadesRep"
+import { CriarAtividadePost } from "../../../../Core/Repositorios/AtividadesRep"
 import { Atividade } from "../../../models/implementacao/Atividade"
-import { CriarAtividadeOuput } from "./CriarAtividadeOutput"
+import { AtividadeOuput } from "../AtividadeOutput"
 
 export async function CriarAtividade(
   pInput: CriarAtividadeInput
-): Promise<CriarAtividadeOuput> {
+): Promise<AtividadeOuput> {
   const NovaAtividade = new Atividade({ descricao: pInput.descricao })
-  const atividadeDB = await criarAtividade(NovaAtividade)
-  return new CriarAtividadeOuput(atividadeDB)
+  const atividadeDB = await CriarAtividadePost(NovaAtividade)
+  return new AtividadeOuput(atividadeDB)
 }

@@ -1,11 +1,23 @@
-import { CriarAtividadeController } from "../../../aplicacao/controllers/Atividade/AtividadeController"
+import {
+  CriarAtividadeController,
+  ListarTodasAtividadesController,
+  DeletarAtividadeController,
+} from "../../../aplicacao/controllers/Atividade/AtividadeController"
 import { Request, Response, Router } from "express"
 
 const routes = Router()
 
-// routes.get("/", (req, res) => {
-//   getAtividadeList(res)
-// })
+routes.get("/", (_, res: Response) => {
+  ListarTodasAtividadesController(res)
+})
+
+routes.post("/", (req: Request, res: Response) => {
+  CriarAtividadeController(req, res)
+})
+
+routes.delete("/deleta/:id", (req: Request, res: Response) => {
+  DeletarAtividadeController(req, res)
+})
 
 // routes.get("/filtro/:condition", (req, res) => {
 //   getAtividadeFiltro(req, res)
@@ -19,10 +31,6 @@ const routes = Router()
 // routes.post("/", (req, res) => {
 //   postAtividade(req, res)
 // })
-
-routes.post("/", (req: Request, res: Response) => {
-  CriarAtividadeController(req, res)
-})
 
 // routes.put("/atualiza/:id", (req, res) => {
 //   putAtividade(req, res)

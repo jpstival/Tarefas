@@ -1,7 +1,7 @@
 import { Atividade } from "domains/models/implementacao/Atividade"
 import { DataFormatada } from "../../../Core/Utilitarios/TratarData"
 
-export class AtividadeOuput {
+export class AtividadeOutput {
   public id_atividade: number
   public tarefa: string
   public status: string

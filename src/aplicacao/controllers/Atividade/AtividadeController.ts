@@ -4,6 +4,8 @@ import { CriarAtividadeInput } from "../../../domains/UseCases/Atividade/Criar/C
 import { Request, Response } from "express"
 import { DeletarAtividadeInput } from "../../../domains/UseCases/Atividade/Deletar/DeletarAtividadeInput"
 import { DeletarAtividades } from "../../../domains/UseCases/Atividade/Deletar/DeletarAtividade"
+import { AtualizarAtividadeInput } from "../../../domains/UseCases/Atividade/Atualizar/AtualizarAtividadeInput"
+import { AtualizarAtividade } from "../../../domains/UseCases/Atividade/Atualizar/AtualizarAtividade"
 
 export async function ListarTodasAtividadesController(
   pResponse: Response
@@ -43,6 +45,23 @@ export async function DeletarAtividadeController(
         .status(400)
         .send(output + "Nenhuma atividade foi removida.")
     }
+  } catch (error: any) {
+    if (error) {
+      return pResponse.status(400).send(error.message)
+    } else {
+      return pResponse.status(500).send("Ocorreu um erro inesperado")
+    }
+  }
+}
+
+export async function AtualizarAtividadeController(
+  pRequest: Request,
+  pResponse: Response
+): Promise<Response> {
+  try {
+    const input = await AtualizarAtividadeInput(pRequest)
+    const atividade = await AtualizarAtividade(input)
+    return pResponse.json(atividade)
   } catch (error: any) {
     if (error) {
       return pResponse.status(400).send(error.message)

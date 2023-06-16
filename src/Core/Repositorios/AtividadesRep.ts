@@ -32,13 +32,29 @@ export const ListarAtividadeById = async (id: string): Promise<Atividade> => {
   return atividadeDB ? atividadeDB.dataValues : null
 }
 
-export const deletarAtividadeById = async (id: number) => {
+export const DeletarAtividadeById = async (id: number) => {
   const atividadeDB = await AtividadeDB.destroy({
     where: {
       id: id,
     },
   })
   return atividadeDB
+}
+
+export const AtualizarAtividadeDB = async (atividade: Atividade) => {
+  console.log(atividade.id)
+  console.log(atividade.descricao)
+  await AtividadeDB.update(
+    {
+      descricao: atividade.descricao,
+    },
+    {
+      where: {
+        id: atividade.id,
+      },
+    }
+  )
+  return ListarAtividadeById(atividade.id.toString())
 }
 
 // export const getAtividadeDBFiltro = async (req: Request, res: Response) => {

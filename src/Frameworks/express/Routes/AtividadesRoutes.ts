@@ -2,6 +2,7 @@ import {
   CriarAtividadeController,
   ListarTodasAtividadesController,
   DeletarAtividadeController,
+  AtualizarAtividadeController,
 } from "../../../aplicacao/controllers/Atividade/AtividadeController"
 import { Request, Response, Router } from "express"
 
@@ -11,12 +12,16 @@ routes.get("/", (_, res: Response) => {
   ListarTodasAtividadesController(res)
 })
 
-routes.post("/", (req: Request, res: Response) => {
+routes.post("/criar/", (req: Request, res: Response) => {
   CriarAtividadeController(req, res)
 })
 
 routes.delete("/deleta/:id", (req: Request, res: Response) => {
   DeletarAtividadeController(req, res)
+})
+
+routes.post("/atualiza/", (req: Request, res: Response) => {
+  AtualizarAtividadeController(req, res)
 })
 
 // routes.get("/filtro/:condition", (req, res) => {
